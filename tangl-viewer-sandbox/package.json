@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --port 2277",
     "build": "vue-tsc && vite build",
     "preview": "vite preview"
   },
@@ -13,8 +13,13 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
+    "i18next": "^23.10.1",
+    "i18next-browser-languagedetector": "^7.2.0",
+    "tangl-viewer": "^0.4.3",
+    "three": "^0.162.0",
     "typescript": "^5.2.2",
     "vite": "^5.1.6",
+    "vue-router": "^4.3.0",
     "vue-tsc": "^1.8.27"
   }
 }
