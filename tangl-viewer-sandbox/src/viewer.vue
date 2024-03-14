@@ -5,9 +5,6 @@ import {
 	GeneralModeExtension,
 	MetaManager,
 	OrbitControllerExtension,
-	OrbitExtensionOptions,
-	FlyControllerExtension,
-	FlyExtensionOptions,
 	SceneManager,
 	viewerStore, Ui,
 } from 'tangl-viewer';
@@ -31,19 +28,10 @@ let renderManager = viewerStore.createRenderManager('default', sceneManager)!;
 onMounted(init);
 
 async function init() {
-	renderManager?.init('default');
+	renderManager?.init('default', 'cube');
   renderManager.extMan.addExtension(GeneralModeExtension);
+	renderManager.extMan.addExtension(OrbitControllerExtension);
 
-	renderManager.extMan.addExtension(OrbitControllerExtension, {
-			leftMouseButton: MOUSE.ROTATE,
-			rightMouseButton: MOUSE.PAN,
-			autoRotate: false,
-		} as OrbitExtensionOptions);
-
-	renderManager.extMan.addExtension(FlyControllerExtension, {
-			leftMouseButton: MOUSE.PAN,
-			rightMouseButton: MOUSE.PAN,
-		} as FlyExtensionOptions);
 	renderManager.extMan.selectControllerExtension("orbit");
   renderManager.extMan.selectModeExtension('general');
 	sceneManager
@@ -66,12 +54,23 @@ onUnmounted(destroy);
 <template>
   <div class="wrapper">
     <div id="default" style="width: 600px; height: 400px;"></div>
+    <div id="cube" ></div>
   </div>
 </template>
 <style>
 .wrapper{
   width: 600px; 
   height:400px;
+  position: relative;
+}
+#cube {
+  position: absolute;
+  width: 200px;
+  height: 135px;
+  touch-action: none;
+  cursor: default;
+  bottom: 0px;
+  right: 0px;
 }
 </style>
 
