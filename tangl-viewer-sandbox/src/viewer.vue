@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { computed, defineEmits, defineProps, nextTick, onBeforeUnmount, onMounted, onUnmounted, ref, watch, withDefaults, defineExpose } from 'vue';
-import { Color, MOUSE, type ColorRepresentation } from "three";
+import {onMounted, onUnmounted, ref} from 'vue';
 import {
 	GeneralModeExtension,
 	MetaManager,
@@ -28,12 +27,17 @@ let renderManager = viewerStore.createRenderManager('default', sceneManager)!;
 onMounted(init);
 
 async function init() {
-	renderManager?.init('default', 'cube');
-  renderManager.extMan.addExtension(GeneralModeExtension);
+	renderManager?.init('viewer-one', 'cube-one', true);
+	renderManager?.init('viewer-two', 'cube-two', true);
+  renderManager.extMan.addExtension(GeneralModeExtension );
 	renderManager.extMan.addExtension(OrbitControllerExtension);
 
 	renderManager.extMan.selectControllerExtension("orbit");
   renderManager.extMan.selectModeExtension('general');
+
+  renderManager.inactiveDarkness = 1.0;
+  renderManager.inactiveContrast = 5.0;
+  renderManager.inactiveFrontOpacity = 0.59;
 	sceneManager
 		.onAllLoaded(() => {
 		})
@@ -53,8 +57,15 @@ onUnmounted(destroy);
 
 <template>
   <div class="wrapper">
-    <div id="default" style="width: 600px; height: 400px;"></div>
-    <div id="cube" ></div>
+    <div class="viewer-one">
+      <div id="viewer-one" style="width: 600px; height: 400px;"></div>
+      <div id="cube-one" ></div>
+    </div>
+
+    <div class="viewer-two">
+      <div id="viewer-two" style="width: 600px; height: 400px;"></div>
+      <div id="cube-two" ></div>
+    </div>
   </div>
 </template>
 <style>
@@ -63,7 +74,16 @@ onUnmounted(destroy);
   height:400px;
   position: relative;
 }
-#cube {
+#cube-one {
+  position: absolute;
+  width: 200px;
+  height: 135px;
+  touch-action: none;
+  cursor: default;
+  bottom: 0px;
+  right: 0px;
+}
+#cube-two {
   position: absolute;
   width: 200px;
   height: 135px;
